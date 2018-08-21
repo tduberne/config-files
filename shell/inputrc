@@ -1,0 +1,22 @@
+# general settings
+set completion-ignore-case on
+
+# le terminal se comporte comme vi:
+# les deux lignes importantes
+ set editing-mode vi
+# la ligne suivante ne permet pas de sélectionner le mode dans lequel
+# les commandes sont valides (voir ci-dessous)
+# set keymap vi
+
+
+$if mode=vi
+	set keymap vi-command
+	# these are for vi-command mode
+	"k": history-search-backward
+	"j": history-search-forward
+
+	set keymap vi-insert
+	# # these are for vi-insert mode
+	"\e[A": history-search-backward
+	"\e[B": history-search-forward
+$endif

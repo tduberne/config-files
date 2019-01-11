@@ -33,6 +33,44 @@ Plugin 'VundleVim/Vundle.vim'
 " different version somewhere else.
 " Plugin 'ascenator/L9', {'name': 'newL9'}
 
+" this requires notedown to be installed:
+" pip install notedown
+Plugin 'szymonmaszke/vimpyter'
+Plugin 'vim-scripts/indentpython.vim'
+Plugin 'vim-syntastic/syntastic'
+" see https://github.com/Valloric/YouCompleteMe#linux-64-bit for instruction
+Plugin 'Valloric/YouCompleteMe'
+
+Plugin 'LaTeX-Suite-aka-Vim-LaTeX'
+
+Plugin 'vim-pandoc/vim-pandoc'
+Plugin 'vim-pandoc/vim-pandoc-syntax'
+Plugin 'vim-pandoc/vim-rmarkdown'
+" R plugins: see https://kadekillary.work/post/nvim-r/
+Plugin 'jalvesaq/Nvim-R'
+Plugin 'chrisbra/csv.vim'
+Plugin 'chrisbra/NrrwRgn'
+Plugin 'w0rp/ale'
+" Plugin 'roxma/nvim-completion-manager'
+Plugin 'gaalcaras/ncm-R'
+
+Plugin 'vimoutliner/vimoutliner'
+
+Plugin 'ervandew/supertab'
+
+" to work with git, in particular diffs
+Plugin 'tpope/vim-fugitive'
+
+" colorschemes
+Plugin 'endel/vim-github-colorscheme'
+Plugin 'lifepillar/vim-solarized8'
+
+Plugin 'scrooloose/nerdtree'
+Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+
+Plugin 'kien/ctrlp.vim'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -93,9 +131,11 @@ set hidden             " Hide buffers when they are abandoned
 "ajouts personnels
 set autoindent		"si ca c'est pas explicite...
 set nu			"numéroter les lignes: :set nonu dans vim pour les masquer.
+set relativenumber " numbering relative to current line. Great for movement quantifiers
 set ts=4		"tabstop: largeur des tabulations: 4 espaces
 set sw=4		"shiftwidth: largeur de l'auto-indentation (mettre la même que tabstop)
-set scrolloff=3	"keep 3 lines visible over and below the cursor
+set scrolloff=5	"keep 5 lines visible over and below the cursor
+set expandtab	"use spaces
 
 set autoread	" lire automatiquement si fichier modifié par l'exterieur
 " autoread un peu merdique (quasiment jamais appelé): forcer un peu les checks
@@ -301,9 +341,55 @@ match Ignore /\r$/
 " """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " CRAN R
 " """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let vimrplugin_assign=0
+let R_assign=2
 
 " """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " markdown
 " """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 au BufRead,BufNewFile *.md set spell
+
+" """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vimpyter
+" """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+autocmd Filetype ipynb nmap <silent><Leader>b :VimpyterInsertPythonBlock<CR>
+autocmd Filetype ipynb nmap <silent><Leader>j :VimpyterStartJupyter<CR>
+autocmd Filetype ipynb nmap <silent><Leader>n :VimpyterStartNteract<CR>
+
+" """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Configure neovim's terminal
+" """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Default way to exit terminal mode is a pain on German keyboard.
+if has('nvim')
+    tnoremap <Esc> <C-\><C-n>
+    " no fold columns in terminal
+    au TermOpen * setlocal foldcolumn=0
+    " no status bar in terminal
+    " disables globally...
+    " au TermOpen * setlocal laststatus=0
+endif
+
+if has('nvim')
+    set termguicolors
+
+    " One of the few colorschemes where diffs are readable
+    " Doe not work with vim
+    " colorscheme github
+    " "list" actually looks very nice with github colorscheme:
+    " enable by default
+    " set list
+
+    "colorscheme solarized8
+endif
+
+"python with virtualenv support
+py << EOF
+import os
+import sys
+if 'VIRTUAL_ENV' in os.environ:
+  project_base_dir = os.environ['VIRTUAL_ENV']
+  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+  execfile(activate_this, dict(__file__=activate_this))
+EOF
+
+" NERDTree opens on Ctrl-n
+map <C-n> :NERDTreeToggle<CR>

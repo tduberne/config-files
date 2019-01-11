@@ -25,6 +25,8 @@ import XMonad.Layout.Maximize
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Reflect
+import XMonad.Util.Cursor
+import XMonad.Config.Gnome
 
 -- for video fullscreen
 -- import XMonad.Hooks.ManageHelpers
@@ -35,8 +37,8 @@ import XMonad.Layout.Reflect
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
--- myTerminal = "Terminal"
-myTerminal = "gnome-terminal"
+myTerminal = "mate-terminal"
+-- myTerminal = "gnome-terminal"
 
 -- Width of the window border in pixels.
 --
@@ -89,9 +91,9 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     -- launch a terminal
     [ ((modMask, xK_Return), spawn $ XMonad.terminal conf)
     -- launch internet navigator
-    , ((modMask, xK_f ), spawn "firefox")
+    , ((modMask, xK_f ), spawn "xdg-open http://www.google.com")
     -- launch file Explorator
-    , ((modMask .|. shiftMask, xK_t ), spawn "thunar")
+    , ((modMask .|. shiftMask, xK_t ), spawn "xdg-open ~")
     -- lanch mail client
     , ((modMask, xK_c ), spawn "thunderbird")
 	-- launch VYM
@@ -107,7 +109,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     -- lanch Mendeley
    , ((modMask, xK_p ), spawn "mendeleydesktop")
     -- launch gmrun
-    , ((modMask .|. shiftMask, xK_p ), spawn "xfce4-appfinder")
+    , ((modMask .|. shiftMask, xK_p ), spawn "synapse")
     -- close focused window
     , ((modMask .|. shiftMask, xK_c ), kill)
      -- Rotate through the available layout algorithms
@@ -146,7 +148,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     -- TODO, update this binding with avoidStruts , ((modMask , xK_b ),
     -- Quit xmonad
     --, ((modMask .|. shiftMask, xK_q ), io (exitWith ExitSuccess))
-    , ((modMask .|. shiftMask, xK_q ), spawn "xfce4-session-logout")
+    , ((modMask .|. shiftMask, xK_q ), spawn "mate-session-save --shutdown-dialog")
     -- Restart xmonad
     , ((modMask , xK_q ), restart "xmonad" True)
     -- to hide/unhide the panel
@@ -172,7 +174,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     -- mod-shift-{w,e,r}, Move client to screen 1, 2, or 3
     --
     [((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
-        | (key, sc) <- zip [xK_e, xK_w, xK_r] [0..]
+        | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
 
@@ -268,6 +270,7 @@ myManageHook = composeAll
 	, className =? "Icedove" --> doF (W.shift "2:mail")
 	, className =? "Eclipse" --> doF (W.shift "10:ide")
 	, className =? "Rambox" --> doF (W.shift "9")
+	, className =? "gnome-calculator" --> doFloat
 	-- pour un vrai full-screen
 	-- TODO: retrouver un moyen de tiller les full-screen (comme avec ancienne
 	-- version)
@@ -299,7 +302,8 @@ myFocusFollowsMouse = False
 -- per-workspace layout choices.
 --
 -- By default, do nothing.
-myStartupHook = return ()
+-- myStartupHook = return ()
+myStartupHook = setDefaultCursor xC_left_ptr
 
 ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
@@ -314,7 +318,7 @@ main = xmonad $ ewmh defaults
 -- 
 -- No need to modify this.
 --
-defaults = defaultConfig {
+defaults = gnomeConfig {
       -- simple stuff
         terminal = myTerminal,
         focusFollowsMouse = myFocusFollowsMouse,

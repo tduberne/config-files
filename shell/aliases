@@ -4,9 +4,9 @@ alias resumeScreen="screen -d -r"
 alias ivtMount="sudo mount -t smbfs //nas-dbaug/share-ivt-common-$ /mnt/ivt-share -o user=thibautd,rw"
 alias vplMount="mount /mnt/vpl-share/"
 alias latex="pdflatex"
-alias via="~/Via-1.7.0/via"
 alias svn="svn --config-option 'config:auth:password-stores=gnome-keyring'"
 alias autolatex="latexmk -pvc -pdf"
 # Usage: java_decompile source1 ... sourceN output_dir
 # see https://github.com/fesh0r/fernflower
 alias java_decompile="java -cp ~/intellij/idea-IC-141.1532.4/plugins/java-decompiler/lib/java-decompiler.jar org.jetbrains.java.decompiler.main.decompiler.ConsoleDecompiler"
+alias o=xdg-open

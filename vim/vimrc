@@ -69,7 +69,11 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 
+Plugin 'mcchrish/nnn.vim'
+
 Plugin 'kien/ctrlp.vim'
+
+Plugin 'vim-scripts/Align'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -94,9 +98,13 @@ filetype plugin indent on    " required
 " line enables syntax highlighting by default.
 syntax on
 
+" go back for a while for syntax highlighting
+syntax sync minlines=200
+
 " If using a dark background within the editing area and syntax highlighting
 " turn on this option as well
 " set background=dark
+set background=light
 
 " Uncomment the following to have Vim jump to the last position when
 " reopening a file
@@ -378,7 +386,7 @@ if has('nvim')
     " enable by default
     " set list
 
-    "colorscheme solarized8
+    colorscheme solarized8
 endif
 
 "python with virtualenv support

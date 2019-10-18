@@ -105,7 +105,42 @@ export MATSIM_DIR=$HOME'/Documents/svn-checkouts/matsim-github/matsim/'
 export MATSIM_PLAYGROUNDS_DIR=$HOME'/Documents/svn-checkouts/matsim-github/playgrounds/'
 
 # virtualenvwrapper
-export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
-export VIRTUALENVWRAPPER_VIRTUALENV=/usr/bin/virtualenv-3
-export WORKON_HOME=~/.venvs
-source ~/.local/bin/virtualenvwrapper.sh
+#export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+#export VIRTUALENVWRAPPER_VIRTUALENV=/usr/bin/virtualenv-3
+#export WORKON_HOME=~/.venvs
+#source ~/.local/bin/virtualenvwrapper.sh
+
+# NNN settings
+export NNN_USE_EDITOR=1
+
+# "cd on quit" if using "n" to lauch nnn
+export NNN_TMPFILE="/tmp/nnn"
+
+n()
+{
+        nnn "$@"
+
+        if [ -f $NNN_TMPFILE ]; then
+                . $NNN_TMPFILE
+                rm -f $NNN_TMPFILE > /dev/null
+        fi
+}
+
+# added by travis gem
+[ -f /home/thibautd/.travis/travis.sh ] && source /home/thibautd/.travis/travis.sh
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/thibautd/.anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/thibautd/.anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/thibautd/.anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/thibautd/.anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+

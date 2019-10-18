@@ -10,3 +10,4 @@ alias autolatex="latexmk -pvc -pdf"
 # see https://github.com/fesh0r/fernflower
 alias java_decompile="java -cp ~/intellij/idea-IC-141.1532.4/plugins/java-decompiler/lib/java-decompiler.jar org.jetbrains.java.decompiler.main.decompiler.ConsoleDecompiler"
 alias o=xdg-open
+alias connect_eth_printer="kinit thibautd@D.ETHZ.CH && klist"
